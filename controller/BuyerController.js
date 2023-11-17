@@ -803,3 +803,32 @@ export const deleteBanner = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("Error while deleting banner", 500));
   }
 });
+
+export const UpdateRoom = catchAsyncError(async (req, res, next) => {
+  const { roomId } = req.params; // Assuming the room ID is passed as a route parameter
+  const { title, roomImage } = req.body; // Assuming the new title and room image URL are passed in the request body
+
+  try {
+    // Find the room by its ID
+    const room = await Room.findById(roomId);
+
+    if (!room) {
+      return next(new ErrorHandler("Room not found", 404));
+    }
+
+    // Update the room properties
+    room.title = title || room.title; // Update the title if provided, otherwise keep the existing title
+    room.roomImage = roomImage || room.roomImage; // Update the room image if provided, otherwise keep the existing image
+
+    // Save the updated room
+    await room.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Room updated successfully",
+      data: room,
+    });
+  } catch (error) {
+    return next(new ErrorHandler("Error while updating the room", 500));
+  }
+});

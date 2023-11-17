@@ -24,6 +24,7 @@ import {
   UpdateUser,
   getMyAllRoom,
   deleteBanner,
+  UpdateRoom,
 } from "../controller/BuyerController.js";
 import multer from "multer";
 const upload = multer({ dest: "uploads/" }); // Make sure to specify the destination directory
@@ -41,6 +42,7 @@ router.route("/getMyAllRoom/:userId").post(getMyAllRoom);
 router.route("/deleteBanner/:bannerId").post(deleteBanner);
 router.route("/SelectSeat/:roomId").post(SelectSeat);
 router.route("/LeaveRoom/:roomId").post(LeaveRoom);
+router.route("/UpdateRoom/:roomId").post(UpdateRoom);
 router.route("/DeleteCountry/:countryId").post(DeleteCountry);
 router.route("/GetSingleRoom/:roomId").post(GetSingleRoom);
 router.route("/DeleteRoom/:roomId").post(DeleteRoom);
