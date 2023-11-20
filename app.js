@@ -271,6 +271,15 @@ io.on("connection", (socket) => {
       });
     }
   });
+  socket.on("sendMessage", async (data) => {
+    const userId = data.userId;
+    const user = await User.findById(userId);
+    io.sockets.emit("receiveMessage", {
+      status: "success",
+      user: user,
+      data: data,
+    });
+  });
   const leaveRoom = () => {
     const { rooms } = socket;
     Array.from(rooms).forEach((roomId) => {
